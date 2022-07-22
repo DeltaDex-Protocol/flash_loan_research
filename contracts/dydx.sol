@@ -86,17 +86,27 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, Swapper, TestUniswap 
     // CUSTOM CODE //
 
     uint loanAmount = repayAmount + 2;
-    uint minAmount = 1801e18;
-
-    
+    uint minAmount = 1e18;
 
     uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
 
-    swapV2(USDC,WETH,usdcV3,minAmount,address(this));
+    // swapV2(USDC,WETH,usdcV3,minAmount,address(this));
 
   }
+
+  function testSwap(address _token, uint _amount) public returns (uint) {
+    uint minAmount = 1e18;
+    swapV2(WETH,USDC,_amount,minAmount,address(this));
+
+    uint balance = IERC20(USDC).balanceOf(address(this));
+
+    return balance;
+  }
+
 }
 // Solo margin contract mainnet - 0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e
 // payable proxy - 0xa8b39829cE2246f89B31C013b8Cde15506Fb9A76
 
-// https://etherscan.io/tx/0xda79adea5cdd8cb069feb43952ea0fc510e4b6df4a270edc8130d8118d19e3f4
+
+
+

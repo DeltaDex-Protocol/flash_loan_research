@@ -174,8 +174,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/uniswapv2swap.sol": {
-      "lastModificationDate": 1658518323903,
-      "contentHash": "71ac0a9ac73c302f42dfbd49d020a74d",
+      "lastModificationDate": 1658519691218,
+      "contentHash": "8da1cd1ed5e9859ed158fdab18481f7a",
       "sourceName": "contracts/uniswapv2swap.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -444,8 +444,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/dydx.sol": {
-      "lastModificationDate": 1658518343459,
-      "contentHash": "32ad8a593f1392c952ca44ea30489358",
+      "lastModificationDate": 1658519547889,
+      "contentHash": "1eed73af6c4da0d6a23a8d5978826273",
       "sourceName": "contracts/dydx.sol",
       "solcConfig": {
         "version": "0.8.15",

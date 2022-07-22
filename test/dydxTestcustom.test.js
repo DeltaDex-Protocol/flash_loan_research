@@ -42,7 +42,7 @@ describe("Deploy flashloan contract and send USDC", () => {
     const dydxBalance = await erc20.balanceOf(dydx.address);
     console.log("flashloan contract balance: ", dydxBalance);
 
-    const flashAmount = ethers.utils.parseUnits("1800");
+    const flashAmount = ethers.utils.parseUnits("100");
 
     const tx = await dydx.initiateFlashLoan(WETH, flashAmount);
 
