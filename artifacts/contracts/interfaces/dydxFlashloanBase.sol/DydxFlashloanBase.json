@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "DydxFlashloanBase",
+  "sourceName": "contracts/interfaces/dydxFlashloanBase.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220157f5fe611b38676bef66c4a474b3b9bff326ee3a48ddab9e504c7a79013975864736f6c634300080f0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220157f5fe611b38676bef66c4a474b3b9bff326ee3a48ddab9e504c7a79013975864736f6c634300080f0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
