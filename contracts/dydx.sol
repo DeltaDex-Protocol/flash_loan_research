@@ -6,12 +6,11 @@ import "./interfaces/dydxFlashloanBase.sol";
 import "./interfaces/ICallee.sol";
 
 import "./uniswapV3swap.sol";
-import "./uniswapv2swap.sol";
+import "./UniswapV2swap.sol";
 
 
-contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, Swapper, TestUniswap {
+contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, UniswapV3Swap {
   address private constant SOLO = 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e;
-
 
   address USDC = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
   address WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
@@ -90,18 +89,11 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, Swapper, TestUniswap 
 
     uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
 
-    // swapV2(USDC,WETH,usdcV3,minAmount,address(this));
+    swapV2(USDC,WETH,usdcV3,minAmount,address(this));
 
   }
 
-  function testSwap(address _token, uint _amount) public returns (uint) {
-    uint minAmount = 1e18;
-    swapV2(WETH,USDC,_amount,minAmount,address(this));
 
-    uint balance = IERC20(USDC).balanceOf(address(this));
-
-    return balance;
-  }
 
 
 }

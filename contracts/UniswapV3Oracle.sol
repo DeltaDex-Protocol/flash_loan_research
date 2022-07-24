@@ -4,7 +4,7 @@ pragma solidity =0.8.15;
 import "./dependencies/uniswap-0.8/IUniswapV3Factory.sol";
 import "./dependencies/uniswap-0.8/OracleLibrary.sol";
 
-contract UniswapV3twap {
+contract UniswapV3oracle {
 
     address public immutable _factory = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
 

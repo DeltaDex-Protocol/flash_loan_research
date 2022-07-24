@@ -7,7 +7,7 @@ import "./dependencies/uniswap-0.8/ISwapRouter.sol";
 
 import "./UniswapV3Oracle.sol";
 
-contract Swapper is UniswapV3twap {
+contract UniswapV3Swap is UniswapV3oracle {
     // NOTE: Does not work with SwapRouter02
     ISwapRouter public constant swapRouter =
         ISwapRouter(0xE592427A0AEce92De3Edee1F18E0157C05861564);
