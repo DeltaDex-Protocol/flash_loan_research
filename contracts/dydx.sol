@@ -104,16 +104,6 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, Swapper, TestUniswap 
   }
 
 
-  function testSwap2(address _token, uint _amount) public returns (uint) {
-    IUniswapV2Router(UNISWAP_V2_ROUTER).swapExactTokensForTokens(
-      _amountIn,
-      _amountOutMin,
-      path,
-      _to,
-      block.timestamp
-      );
-  }
-
 }
 // Solo margin contract mainnet - 0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e
 // payable proxy - 0xa8b39829cE2246f89B31C013b8Cde15506Fb9A76

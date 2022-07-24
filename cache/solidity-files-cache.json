@@ -174,7 +174,7 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/uniswapv2swap.sol": {
-      "lastModificationDate": 1658519691218,
+      "lastModificationDate": 1658651165434,
       "contentHash": "8da1cd1ed5e9859ed158fdab18481f7a",
       "sourceName": "contracts/uniswapv2swap.sol",
       "solcConfig": {
@@ -444,8 +444,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/dydx.sol": {
-      "lastModificationDate": 1658519547889,
-      "contentHash": "1eed73af6c4da0d6a23a8d5978826273",
+      "lastModificationDate": 1658651195058,
+      "contentHash": "da707a8e893be9ef71a39dd11798c02a",
       "sourceName": "contracts/dydx.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -1311,6 +1311,51 @@
       ],
       "artifacts": [
         "PRBMathSD59x18"
+      ]
+    },
+    "/home/szabo/Desktop/solidity/contracts/uniswapv2testSwap.sol": {
+      "lastModificationDate": 1658652961920,
+      "contentHash": "a9871c0ad4132a48b62141892e6ca547",
+      "sourceName": "contracts/uniswapv2testSwap.sol",
+      "solcConfig": {
+        "version": "0.8.15",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./dependencies/openzeppelin/IERC20.sol",
+        "./interfaces/IUniswap.sol"
+      ],
+      "versionPragmas": [
+        "=0.8.15"
+      ],
+      "artifacts": [
+        "UniswapV2Swap"
       ]
     }
   }
