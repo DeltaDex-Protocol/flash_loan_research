@@ -173,51 +173,6 @@
         "IERC20Permit"
       ]
     },
-    "/home/szabo/Desktop/solidity/contracts/uniswapv2swap.sol": {
-      "lastModificationDate": 1658651165434,
-      "contentHash": "8da1cd1ed5e9859ed158fdab18481f7a",
-      "sourceName": "contracts/uniswapv2swap.sol",
-      "solcConfig": {
-        "version": "0.8.15",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "devdoc",
-                "userdoc",
-                "storageLayout",
-                "evm.gasEstimates"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "metadata": {
-            "useLiteralContent": true
-          }
-        }
-      },
-      "imports": [
-        "./dependencies/openzeppelin/IERC20.sol",
-        "./interfaces/IUniswap.sol"
-      ],
-      "versionPragmas": [
-        "=0.8.15"
-      ],
-      "artifacts": [
-        "TestUniswap"
-      ]
-    },
     "/home/szabo/Desktop/solidity/contracts/interfaces/IUniswap.sol": {
       "lastModificationDate": 1658510440506,
       "contentHash": "23cbaba5e0c7694429cd3e3ac1f40a04",
@@ -444,8 +399,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/dydx.sol": {
-      "lastModificationDate": 1658651195058,
-      "contentHash": "da707a8e893be9ef71a39dd11798c02a",
+      "lastModificationDate": 1659343797457,
+      "contentHash": "1f737521f3f49aa9796ebce97b79ae30",
       "sourceName": "contracts/dydx.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -481,7 +436,7 @@
         "./interfaces/dydxFlashloanBase.sol",
         "./interfaces/ICallee.sol",
         "./uniswapV3swap.sol",
-        "./uniswapv2swap.sol"
+        "./UniswapV2swap.sol"
       ],
       "versionPragmas": [
         "=0.8.15"
@@ -535,8 +490,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/uniswapV3swap.sol": {
-      "lastModificationDate": 1658509987790,
-      "contentHash": "9d93cf59ba00e9b43498b25df3e33f40",
+      "lastModificationDate": 1658653825605,
+      "contentHash": "f8c4ce22fda247ecd86fe8fd1d097c02",
       "sourceName": "contracts/uniswapV3swap.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -577,7 +532,7 @@
         "=0.8.15"
       ],
       "artifacts": [
-        "Swapper"
+        "UniswapV3Swap"
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/dependencies/uniswap-0.8/ISwapRouter.sol": {
@@ -625,8 +580,8 @@
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/UniswapV3Oracle.sol": {
-      "lastModificationDate": 1658509802325,
-      "contentHash": "c8f9eb3aa1f1c9bb067cba105a357eef",
+      "lastModificationDate": 1658653818601,
+      "contentHash": "c72a8589c016f7bbed624adaca80193e",
       "sourceName": "contracts/UniswapV3Oracle.sol",
       "solcConfig": {
         "version": "0.8.15",
@@ -666,7 +621,7 @@
         "=0.8.15"
       ],
       "artifacts": [
-        "UniswapV3twap"
+        "UniswapV3oracle"
       ]
     },
     "/home/szabo/Desktop/solidity/contracts/dependencies/uniswap-0.8/IUniswapV3SwapCallback.sol": {
@@ -1313,10 +1268,10 @@
         "PRBMathSD59x18"
       ]
     },
-    "/home/szabo/Desktop/solidity/contracts/uniswapv2testSwap.sol": {
-      "lastModificationDate": 1658652961920,
-      "contentHash": "a9871c0ad4132a48b62141892e6ca547",
-      "sourceName": "contracts/uniswapv2testSwap.sol",
+    "/home/szabo/Desktop/solidity/contracts/UniswapV2swap.sol": {
+      "lastModificationDate": 1659344361992,
+      "contentHash": "4669f6cb58a7d265f65002d2c5e78caa",
+      "sourceName": "contracts/UniswapV2swap.sol",
       "solcConfig": {
         "version": "0.8.15",
         "settings": {
@@ -1348,14 +1303,60 @@
         }
       },
       "imports": [
-        "./dependencies/openzeppelin/IERC20.sol",
-        "./interfaces/IUniswap.sol"
+        "contracts/dependencies/openzeppelin/SafeERC20.sol",
+        "contracts/dependencies/openzeppelin/IERC20.sol",
+        "contracts/dependencies/uniswap-0.8/IUniswapV2.sol",
+        "contracts/dependencies/uniswap-0.8/TransferHelper.sol"
       ],
       "versionPragmas": [
         "=0.8.15"
       ],
       "artifacts": [
         "UniswapV2Swap"
+      ]
+    },
+    "/home/szabo/Desktop/solidity/contracts/dependencies/uniswap-0.8/IUniswapV2.sol": {
+      "lastModificationDate": 1659343654953,
+      "contentHash": "23cbaba5e0c7694429cd3e3ac1f40a04",
+      "sourceName": "contracts/dependencies/uniswap-0.8/IUniswapV2.sol",
+      "solcConfig": {
+        "version": "0.8.15",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IUniswapV2Factory",
+        "IUniswapV2Pair",
+        "IUniswapV2Router"
       ]
     }
   }

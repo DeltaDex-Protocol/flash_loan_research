@@ -60,7 +60,7 @@ describe("Deploy Uniswap V2 swapper contract and implement swap", () => {
     const minOut = await ethers.utils.parseUnits("1");
     console.log("amount In", amountIn);
 
-    const tx = await v2.swapV2(WETH, DAI, amountIn, minOut, v2.address);
+    const tx = await v2.swapV2(WETH, DAI, amountIn, minOut);
     await tx.wait();
 
     erc20_DAI = await ethers.getContractAt("IERC20", DAI);

@@ -4,19 +4,13 @@
 npx hardhat node --fork https://mainnet.infura.io/v3/4914b54dc7684fa7b2c0154761c57939
 ```
 
-#### Unlock DAI on mainnet fork:
+#### Deploy :
 
 ```sh
-npx hardhat --network localhost test test/unlock-account.test.js
+npx hardhat --network localhost test test/uniswapv2test.test.js
 ```
 
-#### Deploy v1-core to mainnet fork:
-
-```sh
-npx hardhat run --network localhost test/deploy.js
-```
-
-#### To get ABI of OptionMaker.sol:
+#### To get ABI
 
 ```sh
 npx hardhat clean

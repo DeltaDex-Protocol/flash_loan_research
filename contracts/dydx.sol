@@ -89,7 +89,7 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
 
     uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
 
-    swapV2(USDC,WETH,usdcV3,minAmount,address(this));
+    swapV2(USDC,WETH,usdcV3,minAmount);
 
   }
 

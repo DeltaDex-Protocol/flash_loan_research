@@ -1,35 +1,49 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.8.15;
 
-import "./dependencies/openzeppelin/IERC20.sol";
-import "./interfaces/IUniswap.sol";
+import {SafeERC20} from "contracts/dependencies/openzeppelin/SafeERC20.sol";
+import "contracts/dependencies/openzeppelin/IERC20.sol";
 
-// @dev this contract must already have _tokenIn balance to implement swap
+import "contracts/dependencies/uniswap-0.8/IUniswapV2.sol";
+import "contracts/dependencies/uniswap-0.8/TransferHelper.sol";
+
+/// @title UniswapV2 Swapper Contract
+/// @author DeltaDex
+/// @notice Swaps token0 for token1 on Uniswap V2 (sushiswap, pancakeswap etc)
+/// @dev Currently this contract is not being inherited by the main DeltaDex contract
+
 contract UniswapV2Swap {
-  address private constant UNISWAP_V2_ROUTER = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
+  using SafeERC20 for IERC20;
+
+  address public constant UNISWAP_V2_ROUTER = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
   address private constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
   function swapV2(
-    address _tokenIn,
-    address _tokenOut,
-    uint _amountIn,
-    uint _amountOutMin,
-    address _to
+    address token0,
+    address token1,
+    uint amountIn,
+    uint amountOutMin
   ) public {
-    // IERC20(_tokenIn).transferFrom(msg.sender, address(this), _amountIn);
-    IERC20(_tokenIn).approve(UNISWAP_V2_ROUTER, _amountIn);
+
+    TransferHelper.safeTransferFrom(
+        token0,
+        address(this),
+        address(this),
+        amountIn
+    );
+    TransferHelper.safeApprove(token0, address(UNISWAP_V2_ROUTER), amountIn);
 
     address[] memory path;
 
     path = new address[](2);
-    path[0] = _tokenIn;
-    path[1] = _tokenOut;
+    path[0] = token0;
+    path[1] = token1;
 
     IUniswapV2Router(UNISWAP_V2_ROUTER).swapExactTokensForTokens(
-      _amountIn,
-      _amountOutMin,
+      amountIn,
+      amountOutMin,
       path,
-      _to,
+      address(this),
       block.timestamp
     );
   }
