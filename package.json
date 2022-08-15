@@ -7,7 +7,6 @@
     "@prb/math": "^2.5.0",
     "collect.js": "^4.34.3",
     "generate-contract-interface": "^0.1.12",
-    "hardhat": "^2.10.1",
     "hardhat-abi-exporter": "^2.10.0",
     "prb-math": "^2.4.3",
     "solidity-docgen": "^0.6.0-beta.22"
@@ -17,6 +16,7 @@
     "chai": "^4.3.6",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.5.4",
+    "hardhat": "^2.10.1",
     "hardhat-deploy": "^0.11.11",
     "hardhat-gas-reporter": "^1.0.8",
     "mocha": "^10.0.0"

@@ -8,6 +8,7 @@ import "./interfaces/ICallee.sol";
 import "./uniswapV3swap.sol";
 import "./UniswapV2swap.sol";
 
+import "hardhat/console.sol";
 
 contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, UniswapV3Swap {
   address private constant SOLO = 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e;
@@ -74,7 +75,7 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
     uint repayAmount = mcd.repayAmount;
 
     uint bal = IERC20(mcd.token).balanceOf(address(this));
-    require(bal >= repayAmount, "bal < repay");
+    require(bal >= repayAmount, "bal > repay");
 
     // log balances
 
@@ -84,18 +85,29 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
 
     // CUSTOM CODE //
 
-    uint loanAmount = repayAmount + 2;
+    uint loanAmount = repayAmount;
     uint minAmount = 1e18;
 
-    uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
+    // uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
 
-    swapV2(USDC,WETH,usdcV3,minAmount);
+    // swapV2(USDC,WETH,usdcV3,minAmount);
+
+    swapV2(WETH,USDC,loanAmount,minAmount);
+
+    uint usdc_bal = IERC20(USDC).balanceOf(address(this));
+
+    console.log("balance 1");
+    console.logUint(balance1);
+
+    console.log("repayAmount");
+    console.logUint(repayAmount);
+
+    console.log("usdc balance");
+    console.logUint(usdc_bal);
+
+
 
   }
-
-
-
-
 }
 // Solo margin contract mainnet - 0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e
 // payable proxy - 0xa8b39829cE2246f89B31C013b8Cde15506Fb9A76

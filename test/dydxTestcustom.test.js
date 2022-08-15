@@ -7,10 +7,14 @@ const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 // DAI_WHALE must be an account, not contract
 const WHALE = "0x2093b4281990a568c9d588b8bce3bfd7a1557ebd";
 
+const DYDX = "0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e";
+
 describe("Deploy flashloan contract and send USDC", () => {
   let accounts;
   let erc20;
   let whale;
+
+  let dydx;
 
   before(async () => {
     await network.provider.request({
@@ -24,16 +28,23 @@ describe("Deploy flashloan contract and send USDC", () => {
     accounts = await ethers.getSigners();
   });
 
-  it("flashloan", async () => {
-    signers = await ethers.getSigners();
+  it("Deploy flashloan contract", async () => {
+    // signers = await ethers.getSigners();
 
     const DYDX = await ethers.getContractFactory("TestDyDxSoloMargin");
-    const dydx = await DYDX.deploy();
+    dydx = await DYDX.deploy();
     await dydx.deployed();
 
-    const amount = await erc20.balanceOf(WHALE);
+    // const amount = await erc20.balanceOf(WHALE);
     console.log("DAI balance of whale", await erc20.balanceOf(WHALE));
     // expect(await erc20.balanceOf(WHALE)).to.gte(amount);
+  });
+
+  it("flashloan", async () => {
+    const flashAmount = await erc20.balanceOf(DYDX);
+    console.log("flashAmount", flashAmount);
+
+    const amount = ethers.utils.parseUnits("1");
 
     await erc20.connect(whale).transfer(dydx.address, amount);
 
@@ -42,7 +53,7 @@ describe("Deploy flashloan contract and send USDC", () => {
     const dydxBalance = await erc20.balanceOf(dydx.address);
     console.log("flashloan contract balance: ", dydxBalance);
 
-    const flashAmount = ethers.utils.parseUnits("100");
+    // const flashAmount = ethers.utils.parseUnits("100");
 
     const tx = await dydx.initiateFlashLoan(WETH, flashAmount);
 

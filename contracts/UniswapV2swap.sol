@@ -23,7 +23,7 @@ contract UniswapV2Swap {
     address token1,
     uint amountIn,
     uint amountOutMin
-  ) public {
+  ) public returns (uint[] memory) {
 
     TransferHelper.safeTransferFrom(
         token0,
@@ -39,7 +39,7 @@ contract UniswapV2Swap {
     path[0] = token0;
     path[1] = token1;
 
-    IUniswapV2Router(UNISWAP_V2_ROUTER).swapExactTokensForTokens(
+    uint256[] memory balance = IUniswapV2Router(UNISWAP_V2_ROUTER).swapExactTokensForTokens(
       amountIn,
       amountOutMin,
       path,
