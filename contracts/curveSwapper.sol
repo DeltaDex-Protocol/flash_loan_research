@@ -9,7 +9,7 @@ interface StableSwap {
     function exchange(int128 i, int128 j, uint256 dx, uint256 min_dy) external;
 }
 
-contract CurveSwap {
+contract CurveSwapper {
 
     address public STABLE_SWAP = 0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7;
 
@@ -19,28 +19,11 @@ contract CurveSwap {
 
     address[] public TOKENS = [DAI,USDC,USDT];
 
-      address private owner;
-
-    // token to initial balance in contract
-    mapping(address => uint) public balances;
-
-    constructor () {
-        owner = msg.sender;
-    }
 
     function typeConvert(uint256 val) public pure returns (int128) {
         uint128 a = uint128(val);
         int128 b = int128(a);
         return b;
-    }
-
-    function deposit(address _token, uint _amount) public {
-        IERC20(_token).transferFrom(msg.sender, address(this), _amount);
-        balances[_token] = _amount;
-    }
-
-    function withdraw(address _token, uint _amount) public {
-        IERC20(_token).transfer(owner, _amount);
     }
     
     function swap(uint256 i, uint256 j) public {

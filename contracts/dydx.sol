@@ -7,13 +7,14 @@ import "./interfaces/ICallee.sol";
 
 import "./uniswapV3swap.sol";
 import "./UniswapV2swap.sol";
+import "./curveSwapper.sol";
 
 import "hardhat/console.sol";
 
-contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, UniswapV3Swap {
+contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, UniswapV3Swap, CurveSwapper {
   address private constant SOLO = 0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e;
 
-  address USDC = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
+  // address USDC = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
   address WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
   address private owner;
@@ -103,17 +104,22 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
     // arbitrage code //
 
     // swap on v3
-    uint usdc_bal = swapExactInputSingle(WETH, USDC, bal);
+    swapExactInputSingle(DAI, USDC, bal);
     console.log("usdc balance swap 1");
-    console.logUint(usdc_bal);
+    uint usdc_val = IERC20(USDC).balanceOf(address(this));
+    console.logUint(usdc_val);
 
+    // curve swap 
+    // TOKENS = [DAI,USDC,USDT];
+    swap(1,0);
+    /* 
     // swap on v2
     uint minAmount = 1e18;
     swapV2(USDC,WETH,usdc_bal,minAmount);
-
-    uint weth_bal = IERC20(WETH).balanceOf(address(this));
-    console.log("weth balance swap 2");
-    console.logUint(weth_bal);
+    */
+    uint dai_val = IERC20(DAI).balanceOf(address(this));
+    console.log("dai balance swap 2");
+    console.logUint(dai_val);
 
   }
 }
