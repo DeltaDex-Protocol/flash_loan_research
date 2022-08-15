@@ -9,7 +9,7 @@ const WHALE = "0x2093b4281990a568c9d588b8bce3bfd7a1557ebd";
 
 const DYDX = "0x1E0447b19BB6EcFdAe1e4AE1694b0C3659614e4e";
 
-describe("Deploy flashloan contract and send USDC", () => {
+describe("Deploy flashloan contract and send weth", () => {
   let accounts;
   let erc20;
   let whale;
@@ -29,43 +29,45 @@ describe("Deploy flashloan contract and send USDC", () => {
   });
 
   it("Deploy flashloan contract", async () => {
-    // signers = await ethers.getSigners();
-
+    // deploy flashloan contract
     const DYDX = await ethers.getContractFactory("TestDyDxSoloMargin");
     dydx = await DYDX.deploy();
     await dydx.deployed();
 
-    // const amount = await erc20.balanceOf(WHALE);
+    console.log("DYDX flashloan contract: ", dydx.address);
+
+    // get test weth
     console.log("DAI balance of whale", await erc20.balanceOf(WHALE));
-    // expect(await erc20.balanceOf(WHALE)).to.gte(amount);
+
+    // send 1 weth from whale to account
+    const amount = ethers.utils.parseUnits("1");
+    await erc20.connect(whale).transfer(accounts[0].address, amount);
+
+    console.log("user balance", await erc20.balanceOf(accounts[0].address));
+
+    await erc20.connect(accounts[0]).approve(dydx.address, amount);
+
+    // send weth to flashloan contract
+    await dydx.connect(accounts[0]).deposit(WETH, amount);
+
+    console.log(
+      "balance of flashloan contract",
+      await erc20.balanceOf(dydx.address)
+    );
   });
 
   it("flashloan", async () => {
+    // get max amount of dydx dex contract
     const flashAmount = await erc20.balanceOf(DYDX);
     console.log("flashAmount", flashAmount);
 
-    const amount = ethers.utils.parseUnits("1");
-
-    await erc20.connect(whale).transfer(dydx.address, amount);
-
-    console.log("DYDX flashloan contract: ", dydx.address);
-
+    // flashloan inside of flashloan contract
     const dydxBalance = await erc20.balanceOf(dydx.address);
     console.log("flashloan contract balance: ", dydxBalance);
-
-    // const flashAmount = ethers.utils.parseUnits("100");
 
     const tx = await dydx.initiateFlashLoan(WETH, flashAmount);
 
     console.log("tx of flashloan", tx);
-
-    const balance1 = await dydx.balance1();
-    const repay = await dydx.repay();
-    const balance2 = await dydx.balance2();
-
-    console.log("balance1", balance1);
-    console.log("repay", repay);
-    console.log("balance2", balance2);
   });
   /*
   it("instantiate flashloan", async function () {

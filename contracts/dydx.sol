@@ -16,11 +16,29 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
   address USDC = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
   address WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
+  address private owner;
+
+  // token to initial balance in contract
+  mapping(address => uint) public balances;
+
+  constructor () {
+    owner = msg.sender;
+  }
 
   struct MyCustomData {
     address token;
     uint repayAmount;
   }
+
+  function deposit(address _token, uint _amount) external {
+    IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+    balances[_token] = _amount;
+  }
+
+  function withdraw(address _token, uint _amount) external {
+    IERC20(_token).transfer(owner, _amount);
+  }
+
 
   function initiateFlashLoan(address _token, uint _amount) external {
     ISoloMargin solo = ISoloMargin(SOLO);
@@ -58,10 +76,6 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
     solo.operate(accountInfos, operations);
   }
 
-  uint public balance1 = 0;
-  uint public repay = 0;
-  int public balance2 = 0;
-
 
   function callFunction(
     address sender,
@@ -72,40 +86,34 @@ contract TestDyDxSoloMargin is ICallee, DydxFlashloanBase, UniswapV2Swap, Uniswa
     require(sender == address(this), "!this contract");
 
     MyCustomData memory mcd = abi.decode(data, (MyCustomData));
+
+    // @dev flashloan balance]
+    console.log("line 91");
+    uint bal = IERC20(mcd.token).balanceOf(address(this)) - balances[WETH];
+    console.log("flashloan balance");
+    console.logUint(bal);
+
+    // @dev required amount to repay
     uint repayAmount = mcd.repayAmount;
-
-    uint bal = IERC20(mcd.token).balanceOf(address(this));
-    require(bal >= repayAmount, "bal > repay");
-
-    // log balances
-
-    balance1 = bal;
-    repay = repayAmount;
-    balance2 = int(bal) - int(repayAmount);
-
-    // CUSTOM CODE //
-
-    uint loanAmount = repayAmount;
-    uint minAmount = 1e18;
-
-    // uint usdcV3 = swapExactInputSingle(WETH, USDC, loanAmount);
-
-    // swapV2(USDC,WETH,usdcV3,minAmount);
-
-    swapV2(WETH,USDC,loanAmount,minAmount);
-
-    uint usdc_bal = IERC20(USDC).balanceOf(address(this));
-
-    console.log("balance 1");
-    console.logUint(balance1);
-
     console.log("repayAmount");
     console.logUint(repayAmount);
 
-    console.log("usdc balance");
+    require(IERC20(mcd.token).balanceOf(address(this)) >= repayAmount, "bal > repay");
+
+    // arbitrage code //
+
+    // swap on v3
+    uint usdc_bal = swapExactInputSingle(WETH, USDC, bal);
+    console.log("usdc balance swap 1");
     console.logUint(usdc_bal);
 
+    // swap on v2
+    uint minAmount = 1e18;
+    swapV2(USDC,WETH,usdc_bal,minAmount);
 
+    uint weth_bal = IERC20(WETH).balanceOf(address(this));
+    console.log("weth balance swap 2");
+    console.logUint(weth_bal);
 
   }
 }
